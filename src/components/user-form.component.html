@@ -1,0 +1,57 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="closeForm()"></div>
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-zinc-800 rounded-lg shadow-2xl z-50 w-full max-w-lg p-6 max-h-[90vh] overflow-y-auto">
+  <h2 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">{{ formTitle }}</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="username" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Nombre de Usuario</label>
+        <input type="text" id="username" formControlName="username" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5">
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Contraseña</label>
+        <input type="password" id="password" formControlName="password" [placeholder]="isEditMode ? 'Dejar en blanco para no cambiar' : ''" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5">
+      </div>
+    </div>
+
+    <div class="mb-6">
+      <label for="role" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Rol</label>
+      <select id="role" formControlName="role" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5">
+        @for(role of userRoles; track role) {
+          <option [value]="role">{{ role | titlecase }}</option>
+        }
+      </select>
+    </div>
+
+    @if (userForm.get('role')?.value === 'user') {
+      <div class="border-t border-gray-200 dark:border-zinc-700 pt-6">
+        <h3 class="text-lg font-medium text-zinc-900 dark:text-white">Asignar Casas</h3>
+        <p class="text-sm text-zinc-500 dark:text-zinc-400 mb-4">Seleccione las casas a las que este usuario tendrá acceso.</p>
+        <div class="space-y-3 max-h-48 overflow-y-auto pr-2" formGroupName="houseAssignments">
+            @for(house of houses(); track house.id) {
+                <div class="relative flex items-start">
+                    <div class="flex h-6 items-center">
+                        <input [id]="'house-' + house.id" [formControlName]="house.id" type="checkbox" class="h-4 w-4 rounded border-gray-300 dark:border-zinc-600 text-sky-600 focus:ring-sky-600">
+                    </div>
+                    <div class="ml-3 text-sm leading-6">
+                        <label [for]="'house-' + house.id" class="font-medium text-zinc-900 dark:text-white">{{ house.name }}</label>
+                    </div>
+                </div>
+            } @empty {
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">No hay casas disponibles para asignar.</p>
+            }
+        </div>
+      </div>
+    }
+    
+    <div class="flex justify-end gap-3 mt-8 pt-6 border-t border-gray-200 dark:border-zinc-700">
+      <button type="button" (click)="closeForm()" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 bg-gray-100 dark:bg-zinc-700 rounded-md hover:bg-gray-200 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+        Cancelar
+      </button>
+      <button type="submit" [disabled]="userForm.invalid" class="px-4 py-2 text-sm font-medium text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:bg-sky-300 dark:disabled:bg-sky-800 disabled:cursor-not-allowed">
+        Guardar Usuario
+      </button>
+    </div>
+
+  </form>
+</div>

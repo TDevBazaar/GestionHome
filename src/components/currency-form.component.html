@@ -1,0 +1,39 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 z-40" (click)="closeForm()"></div>
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-zinc-800 rounded-lg shadow-2xl z-50 w-full max-w-md p-6">
+  <h2 class="text-2xl font-bold mb-6 text-zinc-900 dark:text-white">{{ formTitle }}</h2>
+  <form [formGroup]="currencyForm" (ngSubmit)="onSubmit()">
+    
+    <div class="mb-4">
+      <label for="name" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Nombre de la Moneda</label>
+      <input type="text" id="name" formControlName="name" placeholder="Ej. Dólar estadounidense" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5">
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+      <div>
+        <label for="code" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Código</label>
+        <input type="text" id="code" formControlName="code" placeholder="Ej. USD" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5 disabled:bg-gray-200 dark:disabled:bg-zinc-600">
+        <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">Código ISO de 3 letras.</p>
+      </div>
+      <div>
+        <label for="symbol" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Símbolo</label>
+        <input type="text" id="symbol" formControlName="symbol" placeholder="Ej. $" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5">
+      </div>
+    </div>
+    
+    <div class="mb-4">
+      <label for="rateToCUP" class="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Tasa de Cambio a CUP</label>
+      <input type="number" id="rateToCUP" formControlName="rateToCUP" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-700 shadow-sm focus:border-sky-500 focus:ring-sky-500 text-base px-3 py-2.5 disabled:bg-gray-200 dark:disabled:bg-zinc-600">
+      <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400">¿Cuántos CUP equivalen a 1 unidad de esta moneda? (CUP = 1)</p>
+    </div>
+
+    <div class="flex justify-end gap-3 mt-8">
+      <button type="button" (click)="closeForm()" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 bg-gray-100 dark:bg-zinc-700 rounded-md hover:bg-gray-200 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+        Cancelar
+      </button>
+      <button type="submit" [disabled]="currencyForm.invalid" class="px-4 py-2 text-sm font-medium text-white bg-sky-600 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:bg-sky-300 dark:disabled:bg-sky-800 disabled:cursor-not-allowed">
+        Guardar
+      </button>
+    </div>
+
+  </form>
+</div>

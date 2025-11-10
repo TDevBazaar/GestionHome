@@ -1,0 +1,37 @@
+<div class="fixed inset-0 bg-black bg-opacity-60 z-40" (click)="onCancel()"></div>
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-zinc-800 rounded-lg shadow-2xl z-50 w-full max-w-sm p-6 text-center">
+  @switch (iconType()) {
+    @case ('warning') {
+      <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/50">
+          <svg class="h-6 w-6 text-red-600 dark:text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+          </svg>
+      </div>
+    }
+    @case ('success') {
+       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 dark:bg-green-900/50">
+          <svg class="h-6 w-6 text-green-600 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+          </svg>
+      </div>
+    }
+  }
+
+  <h3 class="text-lg font-semibold mt-4 text-zinc-900 dark:text-white">{{ title() }}</h3>
+  <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2">{{ message() }}</p>
+  <div class="mt-6 flex justify-center gap-3">
+    <button (click)="onCancel()" type="button" class="px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 bg-gray-100 dark:bg-zinc-700 rounded-md hover:bg-gray-200 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+      Cancelar
+    </button>
+    <button (click)="onConfirm()" type="button" 
+      class="px-4 py-2 text-sm font-medium text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2"
+      [class.bg-red-600]="confirmButtonColor() === 'red'"
+      [class.hover:bg-red-700]="confirmButtonColor() === 'red'"
+      [class.focus:ring-red-500]="confirmButtonColor() === 'red'"
+      [class.bg-green-500]="confirmButtonColor() === 'green'"
+      [class.hover:bg-green-600]="confirmButtonColor() === 'green'"
+      [class.focus:ring-green-500]="confirmButtonColor() === 'green'">
+      {{ confirmButtonText() }}
+    </button>
+  </div>
+</div>
